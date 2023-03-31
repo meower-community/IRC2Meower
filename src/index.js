@@ -31,7 +31,7 @@ irc.connect({
 });
 
 meower.onPost((username, content, origin) => {
-    if (origin == null) return;
+    if (origin != null) return;
     channel.say(`${username}: ${content}`);
 });
 
