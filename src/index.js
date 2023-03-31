@@ -20,7 +20,7 @@ irc.on("registered", () => {
     irc.on("message", async (ctx) => {
         if (ctx.nick.match(/.*Serv/i)) return;
         const chat = await db.collection("chats").findOne({
-            irc_channel: ctx.target
+            irc_channel: `#${ctx.target}`
         });
         meower.post(`${ctx.nick}: ${ctx.message}`, chat.meower_gc);
     });
