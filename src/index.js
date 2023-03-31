@@ -6,11 +6,12 @@ dotenv.config();
 
 const meower = new Bot();
 const irc = new IRC.Client();
+let channel;
 
 irc.on("registered", () => {
     irc.join("#irc2meower");
 
-    const channel = irc.channel("#irc2meower");
+    channel = irc.channel("#irc2meower");
     channel.join();
 
     irc.on("message", (ctx) => {
@@ -27,6 +28,10 @@ irc.connect({
         account: process.env.I2M_USERNAME,
         password: process.env.I2M_PASSWORD,
     },
+});
+
+meower.onPost((username, content, origin) => {
+    if (origin != null) channel.say(`${username}: ${content}`);
 });
 
 meower.login(process.env.I2M_USERNAME, process.env.I2M_PASSWORD);
