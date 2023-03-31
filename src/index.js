@@ -31,7 +31,8 @@ irc.connect({
 });
 
 meower.onPost((username, content, origin) => {
-    if (origin != null) channel.say(`${username}: ${content}`);
+    if (origin == null) return;
+    channel.say(`${username}: ${content}`);
 });
 
 meower.login(process.env.I2M_USERNAME, process.env.I2M_PASSWORD);
