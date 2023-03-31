@@ -9,9 +9,9 @@ const irc = new IRC.Client();
 let channel;
 
 irc.on("registered", () => {
-    irc.join("#irc2meower");
+    irc.join(process.env.I2M_IRC_CHANNEL);
 
-    channel = irc.channel("#irc2meower");
+    channel = irc.channel(process.env.I2M_IRC_CHANNEL);
     channel.join();
 
     irc.on("message", (ctx) => {
