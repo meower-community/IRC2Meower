@@ -1,0 +1,29 @@
+{
+  "name": "irc2meower",
+  "version": "1.0.0",
+  "description": "A bridge to IRC and Meower!",
+  "main": "./src/index.js",
+  "type": "module",
+  "scripts": {
+    "start": "node .",
+    "lint": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/meower-community/irc2meower.git"
+  },
+  "author": "M.D. Walters",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/meower-community/irc2meower/issues"
+  },
+  "homepage": "https://github.com/meower-community/irc2meower#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "irc-framework": "^4.13.1",
+    "meowerbot": "^1.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^8.37.0"
+  }
+}
