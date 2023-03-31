@@ -21,7 +21,8 @@
   "dependencies": {
     "dotenv": "^16.0.3",
     "irc-framework": "^4.13.1",
-    "meowerbot": "^1.6.0"
+    "meowerbot": "^1.6.0",
+    "mongodb": "^5.1.0"
   },
   "devDependencies": {
     "eslint": "^8.37.0"

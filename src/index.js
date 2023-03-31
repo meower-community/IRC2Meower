@@ -1,11 +1,14 @@
 import Bot from "meowerbot";
 import IRC from "irc-framework";
 import dotenv from "dotenv";
+import { MongoClient } from "mongodb";
 
 dotenv.config();
 
 const meower = new Bot();
 const irc = new IRC.Client();
+const db = new MongoClient(process.env["I2M_MONGODB_URL"]).db("irc2meower");
+
 let channel;
 
 irc.on("registered", () => {
