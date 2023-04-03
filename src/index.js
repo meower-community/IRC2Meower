@@ -18,7 +18,8 @@ irc.on("registered", () => {
     irc.on("message", async (ctx) => {
         if (ctx.nick.match(/.*Serv/i) || ctx.message.startsWith(`${process.env.I2M_USERNAME} `)) return;
         const chat = await db.collection("chats").findOne({ irc: `#${ctx.target}` });
-        meower.post(`${ctx.nick}: ${ctx.message}`, chat.meower);
+        console.log(chat);
+        meower.post(`${ctx.nick}: ${ctx.message}`, (chat.meower == "home" ? null : chat.meower));
     });
 });
 
@@ -32,9 +33,10 @@ irc.connect({
     }
 });
 
-meower.onPost((username, content, origin) => {
+meower.onPost(async (username, content, origin) => {
     if (origin != null) return;
-    const channel = irc.channel(process.env.I2M_IRC_CHANNEL);
+    const chat = await db.collection("chats").findOne({ meower: origin });
+    const channel = irc.channel(chat.irc);
     channel.join();
     channel.say(`${username}: ${content}`);
 });
