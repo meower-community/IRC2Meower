@@ -16,10 +16,20 @@ irc.on("registered", () => {
     channel.join();
 
     irc.on("message", async (ctx) => {
+        const user = await db.collection("users").findOne({ irc: ctx.nick });
         if (ctx.nick.match(/.*Serv/i) || ctx.message.startsWith(`${process.env.I2M_USERNAME} `)) return;
-        const chat = await db.collection("chats").findOne({ irc: `#${ctx.target}` });
-        console.log(chat);
-        meower.post(`${ctx.nick}: ${ctx.message}`, (chat.meower == "home" ? null : chat.meower));
+
+        if (user == null) {
+            channel.reply("You haven't linked your account yet!");
+            return;
+        }
+
+        if (ctx.message.startsWith(`${process.env.I2M_USERNAME} link`)) {
+            channel.reply("Linking is not ready yet!");
+            return;
+        }
+
+        meower.post(`${ctx.nick}: ${ctx.message}`, (process.env.I2M_MEOWER_CHAT === "home" ? null : process.env.I2M_MEOWER_CHAT));
     });
 });
 
@@ -35,8 +45,7 @@ irc.connect({
 
 meower.onPost(async (username, content, origin) => {
     if (origin != null) return;
-    const chat = await db.collection("chats").findOne({ meower: origin });
-    const channel = irc.channel(chat.irc);
+    const channel = irc.channel(process.env.I2M_IRC_CHANNEL);
     channel.join();
     channel.say(`${username}: ${content}`);
 });
